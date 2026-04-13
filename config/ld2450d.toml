@@ -1,0 +1,9 @@
+# Default config for ld2450d
+# Serial device path (GPIO UART on Pi)
+device = "/dev/ttyAMA0"
+# Baud rate (factory default: 256000)
+baud_rate = 256000
+# Unix socket path for client connections
+socket_path = "/run/ld2450/radar.sock"
+# Log level: trace, debug, info, warn, error
+log_level = "info"

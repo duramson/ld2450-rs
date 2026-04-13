@@ -1,0 +1,26 @@
+[Unit]
+Description=HLK-LD2450 Radar Sensor Daemon
+After=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ld2450d /etc/ld2450d.toml
+Restart=on-failure
+RestartSec=3
+
+# Socket dir created by tmpfiles.d
+RuntimeDirectory=ld2450
+
+# Hardening
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+# Need access to serial device and runtime socket
+ReadWritePaths=/run/ld2450
+# Adjust the device path below to match your serial port
+DeviceAllow=/dev/ttyAMA0 rw
+
+[Install]
+WantedBy=multi-user.target

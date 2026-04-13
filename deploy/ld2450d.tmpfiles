@@ -1,0 +1,2 @@
+# Create runtime directory for ld2450d socket
+d /run/ld2450 0755 root root -
