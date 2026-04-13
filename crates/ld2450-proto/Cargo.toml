@@ -5,6 +5,9 @@ edition.workspace = true
 license.workspace = true
 repository.workspace = true
 description = "HLK-LD2450 radar sensor protocol parser and command builder"
+readme = "README.md"
+keywords = ["radar", "ld2450", "mmwave", "uart", "no-std"]
+categories = ["embedded", "hardware-support", "parser-implementations", "no-std"]
 
 [dependencies]
 libm = "0.2"
