@@ -18,7 +18,6 @@ pub async fn run(
 
     #[cfg(target_os = "linux")]
     {
-        use tokio_serial::SerialPort;
         port.set_exclusive(false)?;
     }
 
