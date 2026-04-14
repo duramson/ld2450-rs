@@ -14,29 +14,29 @@ The daemon reads the sensor over UART and streams parsed target data as JSON-Lin
 
 ## Architecture
 
-```
-HLK-LD2450 sensor
-      | UART (256000 baud)
-      v
-  ld2450d  ──────────────── Unix Socket: /run/ld2450/radar.sock
-  (daemon)                        |
-      |                           └── JSON-Lines stream (10 Hz)
-      └── journald (tracing)           to any connected client
-```
+### Daemon
+```mermaid
+flowchart TD
+    SENSOR1(HLK-LD2450 sensor)
+    SENSOR1 -->|UART 256000 baud| LD2450D(ld2450d daemon)
+    LD2450D --> JOURNALD("journald (tracing)")
+    LD2450D -->|Unix Socket: /run/ld2450/radar.sock| JSON("JSON-Lines stream (10Hz) to any connected client")
 
 ```
-  ld2450-ctl                  <-- one-shot CLI for sensor configuration
-      | UART (direct, daemon must be stopped)
-      v
-  HLK-LD2450 sensor
+### CLI Tool
+One-shot CLI for sensor
+```mermaid
+flowchart LR
+    LD2450CTL(ld2450-ctl)-->|UART direct, daemon must be stopped| SENSOR2(HLK-LD2450 sensor)
 ```
+
 ## Crates
 
-| Crate          | Description                                                                                                  |
-| -------------- | ------------------------------------------------------------------------------------------------------------ |
-| `ld2450-proto` | Protocol library: zero-alloc frame parser (state machine), command builder, ACK parser. `no_std`-compatible. |
-| `ld2450d`      | Streaming daemon: reads UART, parses frames, broadcasts JSON over Unix socket.                               |
-| `ld2450-ctl`   | CLI configuration tool: all sensor commands without a running daemon.                                        |
+| Crate          | Description                                                                                                  | |
+| -------------- | ------------------------------------------------------------------------------------------------------------ | --- |
+| `ld2450-proto` | Protocol library: zero-alloc frame parser (state machine), command builder, ACK parser. `no_std`-compatible. | [![Crates.io](https://img.shields.io/crates/v/ld2450-proto.svg)](https://crates.io/crates/ld2450-proto) [![docs.rs](https://img.shields.io/docsrs/ld2450-proto)](https://docs.rs/ld2450-proto) |
+| `ld2450d`      | Streaming daemon: reads UART, parses frames, broadcasts JSON over Unix socket.                               | |
+| `ld2450-ctl`   | CLI configuration tool: all sensor commands without a running daemon.                                        | |
 
 ## Sensor Data Format
 
