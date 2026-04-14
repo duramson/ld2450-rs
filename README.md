@@ -1,10 +1,12 @@
-# ld2450-rs
-
-**A lean Rust microservice for the HLK-LD2450 24 GHz mmWave radar sensor on Linux.**
-
-![CI](https://github.com/duramson/ld2450-rs/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)
-![MSRV](https://img.shields.io/badge/MSRV-1.74-blue)
+<p align="center">
+  <img src=".github/assets/banner.png" alt="Projekt Banner" width="100%">
+  <br><br>
+  <strong>A lean Rust microservice for the HLK-LD2450 24 GHz mmWave radar sensor on Linux.</strong>
+  <br><br>
+  <img src="https://github.com/duramson/ld2450-rs/actions/workflows/ci.yml/badge.svg" alt="CI">
+  <img src="https://img.shields.io/badge/license-MIT%2FApache--2.0-blue" alt="License">
+  <img src="https://img.shields.io/badge/MSRV-1.74-blue" alt="MSRV">
+</p>
 
 ---
 
@@ -28,7 +30,6 @@ HLK-LD2450 sensor
       v
   HLK-LD2450 sensor
 ```
-
 ## Crates
 
 | Crate          | Description                                                                                                  |
