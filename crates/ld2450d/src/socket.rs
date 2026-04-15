@@ -15,10 +15,10 @@ struct FrameJson<'a> {
 
 #[derive(Serialize)]
 struct TargetJson {
-    x:     f32,
-    y:     f32,
+    x: f32,
+    y: f32,
     speed: f32,
-    dist:  f32,
+    dist: f32,
     angle: f32,
 }
 
@@ -35,10 +35,10 @@ fn frame_to_json(frame: &RadarFrame) -> Vec<u8> {
         .iter()
         .filter(|t| !t.is_empty())
         .map(|t| TargetJson {
-            x:     t.x_m(),
-            y:     t.y_m(),
+            x: t.x_m(),
+            y: t.y_m(),
             speed: t.speed_ms(),
-            dist:  t.dist_m(),
+            dist: t.dist_m(),
             angle: t.angle_deg(),
         })
         .collect();
