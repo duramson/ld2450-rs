@@ -17,16 +17,11 @@ impl Target {
         self.x == 0 && self.y == 0 && self.speed == 0 && self.distance_resolution == 0
     }
 
-    /// Distance from sensor in mm.
-    pub fn distance_mm(&self) -> f32 {
-        let x = self.x as f32;
-        let y = self.y as f32;
-        libm::sqrtf(x * x + y * y)
-    }
-
     /// Distance from sensor in metres.
     pub fn dist_m(&self) -> f32 {
-        self.distance_mm() / 1000.0
+        let x = self.x as f32;
+        let y = self.y as f32;
+        libm::sqrtf(x * x + y * y) / 1000.0
     }
 
     /// X coordinate in metres.
@@ -185,8 +180,9 @@ mod tests {
         assert!((t.x_m() - (-0.782)).abs() < 1e-5);
         assert!((t.y_m() - 1.713).abs() < 1e-5);
         assert!((t.speed_ms() - (-0.16)).abs() < 1e-5);
-        // dist_m = sqrt(0.782² + 1.713²) / 1 ≈ 1.883 m
-        assert!((t.dist_m() - t.distance_mm() / 1000.0).abs() < 1e-6);
+        // dist_m = sqrt(0.782² + 1.713²) ≈ 1.883 m
+        let expected = libm::sqrtf(0.782f32 * 0.782 + 1.713 * 1.713);
+        assert!((t.dist_m() - expected).abs() < 1e-4);
     }
 
     #[test]
