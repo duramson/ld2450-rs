@@ -24,6 +24,26 @@ impl Target {
         libm::sqrtf(x * x + y * y)
     }
 
+    /// Distance from sensor in metres.
+    pub fn dist_m(&self) -> f32 {
+        self.distance_mm() / 1000.0
+    }
+
+    /// X coordinate in metres.
+    pub fn x_m(&self) -> f32 {
+        self.x as f32 / 1000.0
+    }
+
+    /// Y coordinate in metres.
+    pub fn y_m(&self) -> f32 {
+        self.y as f32 / 1000.0
+    }
+
+    /// Radial speed in m/s. Positive = approaching, negative = receding.
+    pub fn speed_ms(&self) -> f32 {
+        self.speed as f32 / 100.0
+    }
+
     /// Angle in degrees from sensor boresight (-90 to +90).
     pub fn angle_deg(&self) -> f32 {
         libm::atan2f(self.x as f32, self.y as f32) * (180.0 / core::f32::consts::PI)
@@ -155,6 +175,18 @@ mod tests {
     fn empty_target() {
         let t = Target::from_bytes(&[0; 8]);
         assert!(t.is_empty());
+    }
+
+    #[test]
+    fn si_unit_conversions() {
+        // x=-782mm, y=1713mm, speed=-16cm/s (from datasheet example)
+        let data = [0x0E, 0x03, 0xB1, 0x86, 0x10, 0x00, 0x40, 0x01];
+        let t = Target::from_bytes(&data);
+        assert!((t.x_m() - (-0.782)).abs() < 1e-5);
+        assert!((t.y_m() - 1.713).abs() < 1e-5);
+        assert!((t.speed_ms() - (-0.16)).abs() < 1e-5);
+        // dist_m = sqrt(0.782² + 1.713²) / 1 ≈ 1.883 m
+        assert!((t.dist_m() - t.distance_mm() / 1000.0).abs() < 1e-6);
     }
 
     #[test]
