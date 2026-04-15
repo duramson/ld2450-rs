@@ -47,26 +47,24 @@ The daemon emits one JSON line per radar frame (10 Hz). Only active targets are 
   "ts": 1744489123.456,
   "targets": [
     {
-      "x": -782,
-      "y": 1713,
-      "speed": -16,
-      "dist_res": 320,
-      "dist_mm": 1888.2,
-      "angle_deg": -24.7
+      "x": -0.782,
+      "y": 1.713,
+      "speed": -0.16,
+      "dist": 1.888,
+      "angle": -24.7
     }
   ]
 }
 ```
 
-| Field       | Unit           | Description                                     |
-| ----------- | -------------- | ----------------------------------------------- |
-| `ts`        | seconds (Unix) | Timestamp                                       |
-| `x`         | mm             | Horizontal position (+ right, - left of sensor) |
-| `y`         | mm             | Distance in front of sensor (always positive)   |
-| `speed`     | cm/s           | Radial speed (+ approaching, - receding)        |
-| `dist_res`  | mm             | Sensor distance gate resolution                 |
-| `dist_mm`   | mm             | Euclidean distance from sensor                  |
-| `angle_deg` | degrees        | Angle from boresight (-60 to +60)               |
+| Field   | Unit           | Description                                      |
+| ------- | -------------- | ------------------------------------------------ |
+| `ts`    | seconds (Unix) | Timestamp                                        |
+| `x`     | metres         | Horizontal position (+ right, − left of sensor)  |
+| `y`     | metres         | Distance in front of sensor (always positive)    |
+| `speed` | m/s            | Radial speed (+ approaching, − receding)         |
+| `dist`  | metres         | Euclidean distance from sensor                   |
+| `angle` | degrees        | Angle from boresight (−60 to +60)                |
 
 Up to **3 targets** can be tracked simultaneously.
 
@@ -263,6 +261,15 @@ for line in sock.makefile():
     frame = json.loads(line)
     print(frame["targets"])
 ```
+
+The JSON format is compatible with [radar-dash](https://github.com/duramson/radar-dash) — a sensor-agnostic web frontend that works with any daemon emitting this schema.
+
+## Related Projects
+
+| Project | Description |
+| ------- | ----------- |
+| [radar-dash](https://github.com/duramson/radar-dash) | Sensor-agnostic HTML5 radar visualisation dashboard. Works directly with `ld2450d` over WebSocket. |
+| [mr60bha2-rs](https://github.com/duramson/mr60bha2-rs) | Equivalent daemon for the Seeed MR60BHA2 60 GHz sensor — same JSON schema, adds vital signs (heart rate, breathing). |
 
 ## Wiring
 
