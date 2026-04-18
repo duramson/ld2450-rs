@@ -24,11 +24,11 @@ for &byte in uart_data {
     if let Some(ParseEvent::Frame(frame)) = parser.feed(byte) {
         for target in frame.active_targets() {
             println!(
-                "x={}mm y={}mm speed={}cm/s dist={:.1}mm",
-                target.x(),
-                target.y(),
-                target.speed(),
-                target.distance_mm(),
+                "x={:.3}m y={:.3}m speed={:.2}m/s dist={:.3}m",
+                target.x_m(),
+                target.y_m(),
+                target.speed_ms(),
+                target.dist_m(),
             );
         }
     }
